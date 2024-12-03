@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD Diary Harian</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Diary Harian</h1>
+        <form id="diaryForm">
+            <input type="hidden" id="entryId" />
+            <input type="text" id="entryTitle" placeholder="Judul" required />
+            <textarea id="entryContent" placeholder="Isi Diary" required></textarea>
+            <button type="submit">Simpan</button>
+        </form>
+        <table id="diaryTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Judul</th>
+                    <th>Isi</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Entri diary akan ditampilkan di sini -->
+            </tbody>
+        </table>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
