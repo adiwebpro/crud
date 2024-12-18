@@ -1,35 +1,320 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD Diary Harian</title>
-    <title>Bagus Adi Suratno S.kom</title>
-    <link rel="stylesheet" href="style.css">
+    <title>PINTAR - Pengadilan Agama Purbalingga</title>
+    
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 4 CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+            margin: 0;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background-color: #4facfe;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .navbar-nav .nav-link {
+            color: white !important;
+            padding: 10px 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .navbar-nav .nav-link:hover {
+            background-color: #00f2fe;
+            color: #fff;
+            border-radius: 30px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            color: white;
+            text-align: center;
+            padding: 100px 0;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 600;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+        }
+
+        /* Toga Animation */
+        .toga-animation {
+            font-size: 100px;
+            animation: spinAndRise 3s ease-in-out infinite;
+        }
+
+        @keyframes spinAndRise {
+            0% {
+                transform: rotate(0deg) translateY(0);
+            }
+
+            50% {
+                transform: rotate(180deg) translateY(-30px);
+            }
+
+            100% {
+                transform: rotate(360deg) translateY(0);
+            }
+        }
+
+        /* Section Title */
+        .section-title {
+            font-weight: 600;
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .section-title::after {
+            content: "";
+            width: 50px;
+            height: 4px;
+            background-color: #00f2fe;
+            display: block;
+            margin: 5px auto 0;
+        }
+
+        /* Card Styling */
+        .card {
+            border-radius: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-title {
+            font-weight: 600;
+        }
+
+        /* Button Hover Effects */
+        .btn-outline-primary:hover {
+            background-color: #4facfe;
+            color: white;
+        }
+
+        .btn-outline-success:hover {
+            background-color: #28a745;
+            color: white;
+        }
+
+        /* Hubungi Kami Section */
+        .contact-section {
+            background-color: #f8f9fa;
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .contact-section h2 {
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        .contact-btn {
+            background-color: #25d366;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .contact-btn:hover {
+            background-color: #128c7e;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 20px 0;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* FAQ Table Styling */
+        table {
+            width: 100%;
+            margin-top: 30px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #e9f7fe;
+        }
+    </style>
 </head>
+
 <body>
-    <div class="container">
-        <h1>Diary Harian</h1>
-        <form id="diaryForm">
-            <input type="hidden" id="entryId" />
-            <input type="text" id="entryTitle" placeholder="Judul" required />
-            <textarea id="entryContent" placeholder="Isi Diary" required></textarea>
-            <button type="submit">Simpan</button>
-        </form>
-        <table id="diaryTable">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Judul</th>
-                    <th>Isi</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Entri diary akan ditampilkan di sini -->
-            </tbody>
-        </table>
-    </div>
-    <script src="script.js"></script>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">PINTAR</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="#beranda">Beranda</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#tentang">Tentang</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#daftar">Daftar</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#faq">FAQ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Hubungi Kami</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="beranda" class="hero">
+        <div class="container">
+            <h1>Selamat Datang di PINTAR</h1>
+            <p>Pendaftaran Informasi Magang dan Riset</p>
+            <div class="toga-animation">
+                🎓
+            </div>
+        </div>
+    </section>
+
+    <!-- Tentang -->
+    <section id="tentang" class="py-5">
+        <div class="container">
+            <h2 class="section-title">Apa Itu PINTAR?</h2>
+            <p>PINTAR adalah inovasi yang dikembangkan oleh mahasiswa magang di Pengadilan Agama Purbalingga. Platform ini mempermudah akses informasi dan pendaftaran seputar Magang, Riset, dan Penelitian.</p>
+        </div>
+    </section>
+
+    <!-- Daftar -->
+    <section id="daftar" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title text-center">Daftar Program</h2>
+            <p class="text-center mb-4">Pilih program yang sesuai dengan kebutuhan Anda untuk melanjutkan pendaftaran.</p>
+            <div class="row">
+                <!-- Riset/Penelitian -->
+                <div class="col-md-6">
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary">RISET/PENELITIAN</h5>
+                            <p class="card-text">Riset adalah kegiatan yang sistematis dan terstruktur untuk menemukan, mengembangkan, atau menguji pengetahuan baru.</p>
+                            <div class="text-center">
+                                <a href="https://docs.google.com/forms/" target="_blank" class="btn btn-outline-primary">Daftar Riset</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Magang/PKL -->
+                <div class="col-md-6">
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title text-success">MAGANG/PKL</h5>
+                            <p class="card-text">Magang adalah kegiatan bagi siswa/mahasiswa untuk mengaplikasikan pengetahuan yang didapat di sekolah atau kampus ke dunia kerja.</p>
+                            <div class="text-center">
+                                <a href="https://docs.google.com/forms/" target="_blank" class="btn btn-outline-success">Daftar Magang</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hubungi Kami -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2>Hubungi Kami</h2>
+            <p>Jika Anda memiliki pertanyaan atau membutuhkan bantuan lebih lanjut, jangan ragu untuk menghubungi kami melalui WhatsApp, Instagram, GitHub, atau email.</p>
+            <div class="contact-buttons">
+                <a href="https://wa.me/085867431606" class="contact-btn" target="_blank">WhatsApp</a>
+                <a href="https://instagram.com/yourusername" class="contact-btn" target="_blank">Instagram</a>
+                <a href="https://github.com/yourusername" class="contact-btn" target="_blank">GitHub</a>
+                <a href="mailto:your-email@example.com" class="contact-btn">Email</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="py-5">
+        <div class="container">
+            <h2 class="section-title">FAQ</h2>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Question</th>
+                        <th>Answer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Bagaimana prosedur pengajuan perpanjangan waktu Magang?</td>
+                        <td>Peserta magang dapat menghubungi mentor atau penanggung jawab unit magang untuk pengajuan perpanjangan waktu.</td>
+                    </tr>
+                    <tr>
+                        <td>Apakah Peserta Magang mendapatkan uang saku?</td>
+                        <td>Saat ini, Pengadilan Agama Purbalingga belum menyediakan honorarium untuk peserta Magang.</td>
+                    </tr>
+                    <tr>
+                        <td>Apakah peserta Magang mendapatkan Sertifikat?</td>
+                        <td>Ya, peserta yang berhasil menyelesaikan Magang akan mendapatkan sertifikat resmi dari Pengadilan Agama Purbalingga.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <p>&copy; 2024 PINTAR - Pengadilan Agama Purbalingga</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 4 JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
